@@ -61,7 +61,7 @@ class ImageUploader(QMainWindow):
             self.image_paths[str(len(self.image_paths) + 1)] = file_name  # Generar un ID único para la imagen
 
             # Añadir imagen al layout
-            row, col = divmod(len(self.image_widgets) - 1, 4)
+            row, col = divmod(len(self.image_widgets) - 1, 9)  # Hasta 9 imágenes por fila
             self.image_layout.addWidget(label, row, col)
 
             # Ajustar el tamaño del scroll area
@@ -115,5 +115,5 @@ class ImageUploader(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ImageUploader()
-    window.showFullScreen()  # Mostrar la ventana en pantalla completa
+    window.showFullScreen()  # Mostrar la ventana
     sys.exit(app.exec_())
