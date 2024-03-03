@@ -52,19 +52,22 @@ class ImageUploader(QMainWindow):
             self.add_image(file_name)
 
     def add_image(self, file_name):
-        pixmap = QPixmap(file_name)
-        label = QLabel()
-        label.setPixmap(pixmap.scaledToWidth(200))
-        label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        self.image_widgets.append(label)
-        self.image_paths[str(len(self.image_paths) + 1)] = file_name  # Generar un ID único para la imagen
+        if file_name not in self.image_paths.values():
+            pixmap = QPixmap(file_name)
+            label = QLabel()
+            label.setPixmap(pixmap.scaledToWidth(200))
+            label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+            self.image_widgets.append(label)
+            self.image_paths[str(len(self.image_paths) + 1)] = file_name  # Generar un ID único para la imagen
 
-        # Añadir imagen al layout
-        row, col = divmod(len(self.image_widgets) - 1, 4)
-        self.image_layout.addWidget(label, row, col)
+            # Añadir imagen al layout
+            row, col = divmod(len(self.image_widgets) - 1, 4)
+            self.image_layout.addWidget(label, row, col)
 
-        # Ajustar el tamaño del scroll area
-        self.adjust_scroll_area_size()
+            # Ajustar el tamaño del scroll area
+            self.adjust_scroll_area_size()
+        else:
+            QMessageBox.warning(self, "Imagen repetida", "La imagen ya ha sido cargada.")
 
     def adjust_scroll_area_size(self):
         # Calcular el ancho total de las imágenes
@@ -90,7 +93,7 @@ class ImageUploader(QMainWindow):
                 loaded_paths = json.load(f)
                 for file_name in loaded_paths.values():
                     self.add_image(file_name)
-                    self.image_paths.update(loaded_paths)
+                self.image_paths.update(loaded_paths)
         except FileNotFoundError:
             pass
 
