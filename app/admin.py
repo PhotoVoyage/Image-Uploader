@@ -36,14 +36,14 @@ class AdminWindow(QMainWindow):
             label.setPixmap(pixmap.scaledToWidth(200))
             label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
-            delete_button = QPushButton("Borrar")
+            delete_button = QPushButton("Delete")
             delete_button.clicked.connect(lambda _, img_id=image_id: self.delete_image(img_id))
 
             self.image_layout.addWidget(label, index, 0)
             self.image_layout.addWidget(delete_button, index, 1)
 
     def delete_image(self, image_id):
-        reply = QMessageBox.question(self, 'Eliminar imagen', f"¿Estás seguro que quieres eliminar la imagen {image_id}?",
+        reply = QMessageBox.question(self, 'Delete Image', f"Are you sure you want to delete image {image_id}?",
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
