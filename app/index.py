@@ -1,20 +1,22 @@
 import sys
 import json
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QFileDialog, QHBoxLayout, QSizePolicy, QLineEdit, QMessageBox, QScrollArea, QGridLayout
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QFileDialog, QHBoxLayout, QSizePolicy, QLineEdit, QMessageBox, QScrollArea, QGridLayout, QAction, QMenu
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
 class ImageUploader(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Image Uploader")
-        self.setWindowIcon(QIcon("icon.png"))  # Reemplaza "icon.png" con la ruta de tu icono
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
+
+        # Menú principal
+        self.create_menu()
 
         self.search_layout = QHBoxLayout()  
         self.layout.addLayout(self.search_layout)
@@ -43,6 +45,17 @@ class ImageUploader(QMainWindow):
 
         # Cargar imágenes almacenadas en el archivo JSON
         self.load_images_from_json()
+
+    def create_menu(self):
+        menubar = self.menuBar()
+        
+        home_menu = menubar.addMenu('Home')
+        home_action = QAction('Home', self)
+        home_menu.addAction(home_action)
+        
+        admin_menu = menubar.addMenu('Admin')
+        admin_action = QAction('Admin', self)
+        admin_menu.addAction(admin_action)
 
     def open_file_dialog(self):
         options = QFileDialog.Options()
